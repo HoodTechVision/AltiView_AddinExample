@@ -1,0 +1,3 @@
+[submodule "AltiView_AddIns"]
+	path = AltiView_AddIns
+	url = https://github.com/HoodTechVision/AltiView_AddIns.git
