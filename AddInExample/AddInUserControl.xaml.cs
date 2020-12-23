@@ -1,35 +1,39 @@
-﻿using System;
+﻿
 using System.AddIn;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 using AddInViews;
+using NamedPipeWrapper;
 
 namespace WPFAddIn1
-{
-    /// <summary>
-    /// Interaction logic for UserControl1.xaml
-    /// </summary>
+{        
     public partial class AddInUserControl : UserControl
     {
+        NamedPipeClient<byte[]> _client = new NamedPipeClient<byte[]>("altiview_pipe_addins");
+        byte[] SERVER_TEST_RESPONSE = Encoding.ASCII.GetBytes("SERVER_TEST_RESPONSE");
+        byte[] CLIENT_TEST_QUERY = Encoding.ASCII.GetBytes("CLIENT_TEST_QUERY");
+
         public AddInUserControl()
         {
-            InitializeComponent();
+            InitializeComponent();     
+            _client.ServerMessage += _client_ServerMessage;
+            _client.Start();
         }
 
-        private void clickMeButton_Click(object sender, RoutedEventArgs e) {
-            MessageBox.Show("Hello from WPFAddIn1");
+        private void _client_ServerMessage(NamedPipeConnection<byte[], byte[]> connection, byte[] message)
+        {
+            if (message.SequenceEqual(SERVER_TEST_RESPONSE))
+            {
+                MessageBox.Show("Response received from server: " + Encoding.ASCII.GetString(message));
+            }            
+        }
+
+        private void clickMeButton_Click(object sender, RoutedEventArgs e) {            
+            _client.PushMessage(CLIENT_TEST_QUERY);
         }
     }
 
