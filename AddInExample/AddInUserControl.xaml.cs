@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.AddIn;
 using System.Linq;
 using System.Text;
@@ -28,11 +29,16 @@ namespace WPFAddIn1
         {
             if (message.SequenceEqual(SERVER_TEST_RESPONSE))
             {
-                MessageBox.Show("Response received from server: " + Encoding.ASCII.GetString(message));
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    lblResponse.Content = "Response Received: " + Encoding.ASCII.GetString(message);
+                    lblLastReceived.Content = "Timestamp: " + DateTime.Now.ToString();
+                });
             }            
         }
 
-        private void clickMeButton_Click(object sender, RoutedEventArgs e) {            
+        private void clickMeButton_Click(object sender, RoutedEventArgs e) {
+            lblResponse.Content = "Waiting for response...";
             _client.PushMessage(CLIENT_TEST_QUERY);
         }
     }

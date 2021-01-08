@@ -5,10 +5,20 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPFAddIn1"
              mc:Ignorable="d"
-             Background="Beige"
              Width="250">
-    <StackPanel>
-        <TextBlock FontSize="14" Margin="2" TextWrapping="Wrap" Text="This button sends a message to AltiView via a named pipe. If communication is successful, a pop-up will be displayed with the response."/>
-        <Button Click="clickMeButton_Click" FontSize="14" Content="Send Test Message to AltiView!"/>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes\Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <StackPanel Background="#595959">
+        <TextBox FontSize="14" Margin="2" TextWrapping="Wrap" Text="This button sends a message to AltiView via a named pipe. If communication is successful the response will be displayed below."/>
+        <Separator/>
+        <Button Click="clickMeButton_Click" FontSize="14" Content="Send Test Message to AltiView!" Margin="8,5,8,5"/>
+        <Label x:Name="lblResponse" Content="Response: "/>
+        <Label x:Name="lblLastReceived" Content="Timestamp: "/>
     </StackPanel>
 </UserControl>
