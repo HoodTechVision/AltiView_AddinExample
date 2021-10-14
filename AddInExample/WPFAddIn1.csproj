@@ -100,9 +100,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if $(ConfigurationName) == Release (
-PowerShell -ExecutionPolicy Unrestricted
-PowerShell Compress-Archive -Path "$(TargetDir)*" -DestinationPath "$(TargetDir)$(ProjectName).zip" -Force
-)</PostBuildEvent>
+    <PostBuildEvent>PowerShell -ExecutionPolicy Unrestricted
+PowerShell Compress-Archive -Path "$(TargetDir)*" -DestinationPath "$(TargetDir)$(ProjectName).zip" -Force</PostBuildEvent>
   </PropertyGroup>
 </Project>

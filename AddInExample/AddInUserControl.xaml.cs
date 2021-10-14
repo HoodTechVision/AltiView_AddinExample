@@ -5,8 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-
-
+using System.Windows.Threading;
 using AddInViews;
 using NamedPipeWrapper;
 
@@ -29,7 +28,7 @@ namespace WPFAddIn1
         {
             if (message.SequenceEqual(SERVER_TEST_RESPONSE))
             {
-                Application.Current.Dispatcher.Invoke(() =>
+                Dispatcher.Invoke(() =>
                 {
                     lblResponse.Content = "Response Received: " + Encoding.ASCII.GetString(message);
                     lblLastReceived.Content = "Timestamp: " + DateTime.Now.ToString();
@@ -51,6 +50,12 @@ namespace WPFAddIn1
         public FrameworkElement GetAddInUI() {
             // Return add-in UI
             return new AddInUserControl();
+        }
+
+        public bool Shutdown()
+        {
+            Dispatcher.CurrentDispatcher.InvokeShutdown();
+            return true;
         }
     }
 }
