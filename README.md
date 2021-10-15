@@ -14,5 +14,10 @@ Running the Example Project:
 4) If AltiView successfully receives the test message its response will be displayed via a MessageBox in the test project. If the test fails, no message box will appear.
 
 Exporting the Add-In to AltiView:
-1) Build the solution (specifically the **WPFAddIn1** project) in Release mode. This will generate a .zip of the AddIn in the **\bin\Release** directory.
+1) Build the solution in Release mode (specifically the **WPFAddIn1** project). This will generate a .zip of the AddIn in the **\bin\Release** directory.
 2) Import the Add-In .zip into AltiView with the drop-down menu **Add-In->Import**.
+
+Subprojects explained:
+ * **AddInViews:** Required for compatibility with AltiView, do not modify!
+ * **WPFAddIn1:** This is where your Add-In code goes. Modify ```AddInUserControl.xaml```.
+ * **TestAppForAddIn**: This project is here for testing the add-in control. Typically does not need to be modified.
